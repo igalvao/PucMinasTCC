@@ -1,0 +1,74 @@
+﻿@model IncidenteModel
+@{
+    ViewData["Title"] = "Incidentes";
+}
+
+<h2>Detalhes</h2>
+<script defer src="~/js/Incidente.js"></script>
+
+<div class="container-fluid">
+    <form asp-action="Detalhes" method="post">
+        <input type="hidden" asp-for="Detalhe.IdIncidente" />
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label asp-for="Detalhe.IdIncidente" class="control-label"></label>
+                    <input asp-for="Detalhe.IdIncidente" class="form-control" disabled />
+                </div>
+            </div>
+        </div>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-geral-tab" data-toggle="tab" href="#nav-geral" role="tab" aria-controls="nav-geral" aria-selected="true">Geral</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-geral" role="tabpanel" aria-labelledby="nav-geral-tab">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Detalhe.Descricao" class="control-label"></label>
+                            <input asp-for="Detalhe.Descricao" class="form-control" required />
+                            <span asp-validation-for="Detalhe.Descricao" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="NaoConformidades" class="control-label"></label>
+                            <select asp-for="Detalhe.NaoConformidade.IdNaoConformidade" asp-items="@Model.NaoConformidades.ToSelectList(nameof(NaoConformidade.IdNaoConformidade), nameof(NaoConformidade.Descricao))" class="form-control" required></select>
+                            <span asp-validation-for="Detalhe.NaoConformidade.IdNaoConformidade" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Estado" class="control-label"></label>
+                            @if (ViewBag.propertydisable)
+                            {
+                                <select asp-for="Detalhe.EstadoIncidente" asp-items="Model.Estado" class="form-control" disabled></select>
+                            }
+                            else
+                            {
+                                <select asp-for="Detalhe.EstadoIncidente" asp-items="Model.Estado" class="form-control" required></select>
+                            }
+                            <span asp-validation-for="Detalhe.EstadoIncidente" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <a asp-action="Index" class="btn btn-primary"><i class="fas fa-undo"></i>Voltar</a>
+                            <button type="submit" class="btn btn-warning">Salvar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

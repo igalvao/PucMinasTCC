@@ -1,0 +1,46 @@
+﻿@model PagedList<Receita>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Id</th>
+            <th>Ano</th>
+            <th>CNPJ</th>
+            <th>OrcamentoAtualizado</th>
+            <th>ReceitaRealizada</th>
+            <th>PorcentagemPrevisto</th>
+            <th>ValorLancado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model?.CurrentItens != null)
+        {
+            foreach (var item in Model.CurrentItens)
+            {
+                <tr>
+                    <td>
+                        @if (SharedValues.UsuarioLogado != null)
+                        {
+                            <a asp-action="Detalhes" asp-route-id="@item.IdReceita" class="btn btn-info"><i class="fas fa-edit"></i>Editar</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Detalhes" asp-route-id="@item.IdReceita" class="btn btn-info disabled" aria-disabled="true"><i class="fas fa-edit"></i>Editar</a>
+                        }
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.IdReceita)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Ano)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CNPJ)</td>
+                    <td>@Html.DisplayFor(modelItem => item.OrcamentoAtualizado)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ReceitaRealizada)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PorcentagemPrevisto)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ValorLancado)</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<pagination paged-list="@Model" action-link="Pesquisar('@Url.Action("Pesquisar")', #page)" selector-replace="#page"></pagination>
+
